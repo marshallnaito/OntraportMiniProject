@@ -1,10 +1,12 @@
 <html>
 	<body>
+		<!-- echo the results -->
 		Results:<br><br>
 		First Name: <?php echo $_POST["firstName"]; ?><br>
 		Last Name: <?php echo $_POST["lastName"]; ?><br>
 		Email: <?php echo $_POST["email"]; ?> <br> <br>
 		<?php
+			//assign variables
 			$servername = "localhost";
 			$username = "root";
 			$password = "ko0plij";
