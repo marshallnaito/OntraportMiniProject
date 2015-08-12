@@ -10,7 +10,7 @@
 	echo "</html>";
 
 	if ( ($_POST["firstName"]==null) or ($_POST["lastName"]==null) or ($_POST["email"]==null)){
-		die("Please fill in all required fields.\n");
+		die("ERROR: Please fill in all required fields.\n");
 	}
 
 	//declare variables for link
@@ -26,12 +26,12 @@
 	if (!mysqli_select_db($link, $dbname)) {
 		$db_query = "CREATE DATABASE IF NOT EXISTS $dbname";
 		if (!mysqli_query($link, $db_query)){
-			echo "ERROR: database not created\n" . mysqli_error($link);
+			echo "ERROR: Database not created - " . mysqli_error($link);
 		}
 	}
 
 	if (mysqli_connect_errno()) {
-		echo "Could not connect to mysql. Error: " . mysqli_connect_errno();
+		echo "ERROR: Could not connect to mysql -  " . mysqli_connect_errno();
 	}
 
 	mysqli_select_db($link, $dbname);
@@ -39,7 +39,7 @@
 	// create a table if there isn't one already
 	$db_query = "CREATE TABLE IF NOT EXISTS $tbname (firstname VARCHAR(20), lastname VARCHAR(20), email VARCHAR(40))";
 	if (!mysqli_query($link, $db_query)){
-		echo "table creation error\n";
+		echo "ERROR: Table not created - " . mysqli_error($link);
 	}
 
 	//add user into the database($_POST["firstName"]==null)
