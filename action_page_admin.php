@@ -2,13 +2,14 @@
 	//echo info to the webpage
 	echo "<html>";
 	echo 	"<body>";
-	echo 		"Form Results: <br> <br>";
+	echo 		"Administrative Form Results: <br> <br>";
 	echo 		"<b>First Name: </b>".$_POST["firstName"]."<br>";
 	echo 		"<b>Last Name: </b>".$_POST["lastName"]."<br>";
 	echo 		"<b>Email: </b>".$_POST["email"]."<br> <br>";
 	echo 	"</body>";
 	echo "</html>";
 
+	// check to see if user input is complete.
 	if ( ($_POST["firstName"]==null) or ($_POST["lastName"]==null) or ($_POST["email"]==null)){
 		die("ERROR: Please fill in all required fields.\n");
 	}
