@@ -15,15 +15,13 @@
 
 	// make sure there wasn't an error in user input
 	if($inputerror==false){
-		// declare variables for link
-		$servername = "localhost"; 
-		$username = "root";
-		$password = "ko0plij";
-		$dbname = "ontraport_users";
-		$tbname = "user_info";
+		
+		// get credentials from user.credentials.ini
+		$config = parse_ini_file('user.credentials.ini');
+		$tablename = $config['tbname'];
 
-		// connect to database
-		$link = mysqli_connect($servername, $username, $password, $dbname);
+		// // connect to database
+		$link = mysqli_connect($config['servername'], $config['username'], $config['password'], $config['dbname']);
 
 		// check if link was established correctly
 		if (mysqli_connect_errno()){
@@ -32,12 +30,11 @@
 			die ("Unable to connect to our database.\n" . mysqli_connect_error());
 		}
 
-
 		//add user into the database($_POST["firstName"]==null)
 		$first_name = mysqli_real_escape_string($link, $_POST['firstName']);
 		$last_name = mysqli_real_escape_string($link, $_POST['lastName']);
 		$email_address = mysqli_real_escape_string($link, $_POST['email']);
-		$query = "INSERT INTO $tbname (firstname, lastname, email) VALUES ('$first_name', '$last_name', '$email_address')";
+		$query = "INSERT INTO $tablename (firstname, lastname, email) VALUES ('$first_name', '$last_name', '$email_address')";
 
 		// check if added to the database
 		if (!mysqli_query($link, $query)){
