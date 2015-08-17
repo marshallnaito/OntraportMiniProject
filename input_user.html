@@ -1,12 +1,24 @@
 <!DOCTYPE HTML>
-<html>
-	<body>
-		<h>Ontraport Mini Form Project:</h><br><br>
-		<form action="action_page_user.php" method="post">
-			First Name: <input type="text" name="firstName"><br>
-			Last Name: <input type="text" name="lastName"><br>
-			Email: <input type="text" name="email"><br>
-			<input type="submit">
+<html>	
+<link rel="stylesheet" type="text/css" href="forminput.css">
+	<div class="form-style">
+		<form class="form-style" action="action_page_user.php" method="post">
+			<h1>Enter User Info:</h1>
+			<ul>
+				<li>
+					<label for="firstName">First Name</label>
+					<input type="text" name="firstName" maxlength="40">
+				</li>
+				<li>
+					<label for="lastName">Last Name</label>
+					<input type="text" name="lastName" maxlength="40">
+				</li>
+				<li>
+					<label for="email">Email</label>
+					<input type="text" name="email" maxlength="40">
+				</li>
+			</ul>
+			<input type="submit" value="Enter User Info" id="btn_submit" align=center>
 		</form>
-	</body>
+	</div>
 </html>
