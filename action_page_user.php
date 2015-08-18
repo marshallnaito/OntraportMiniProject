@@ -8,8 +8,7 @@
 
 	// check to see if all user-input fields are filled in
 	if ( ($_POST["firstName"]==null) or ($_POST["lastName"]==null) or ($_POST["email"]==null)){
-		//$inputerror = true;
-		//header('Location: input_user.html');
+		header('Location: input_user.html');
 		die ("ERROR: Please fill in all required fields.");
 	}
 		
@@ -23,7 +22,8 @@
 	// check if link was established correctly
 	if (mysqli_connect_errno()){
 		header('Location: input_user.html');
-		die ("Unable to connect to our database.\n" . mysqli_connect_error());
+		//header("Refresh: 3, url=input_user.html");
+		die ("Unable to connect to our database.<br>" . mysqli_connect_error());
 	}
 
 	//add user into the database($_POST["firstName"]==null)
@@ -35,11 +35,12 @@
 	// check if added to the database
 	if (!mysqli_query($link, $query)){
 		header('Location: input_user.html');
-		die ("ERROR: $query not added correctly.\n" . mysqli_error($link));
+		//header("Refresh: 3, url=input_user.html");
+		die ("ERROR: $query not added correctly.<br>" . mysqli_error($link));
 	}
 	mysqli_close($link);
 
-	// check to see if there were no errors along the way
+	// Go to thank you page upon success
 	header('Location: thank_you_page.php');
 
 ?>
