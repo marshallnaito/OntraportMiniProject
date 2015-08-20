@@ -2,7 +2,7 @@
 <style type="text/css">
 
 .form-style{
-    max-width:200px;
+    max-width:300px;
     margin:50px auto;
     border-radius:2px;
     padding:20px;
@@ -11,8 +11,8 @@
 
 .form-style form {
 	margin:auto;
+    max-width:210px;
 	position:relative;
-	width:200px;
 	padding:10px;
 	border-style: solid;
 	border-color: #B9B9B9;
