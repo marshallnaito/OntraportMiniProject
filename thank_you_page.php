@@ -2,16 +2,15 @@
 	// retrieve and store variables from contact
 	include 'Contact.php';
 
+	// Get ID and retrieve info from database
 	$contactID=$_GET['contactID'];
-	echo "$contactID <br>";
-
 	$contact = new Contact();
 	$contact->Fetch($contactID);
 
 	// echo thank you message
 	echo "<html>";
 	echo 	"<body>";
-	echo 		"Thank you $fName.<br>";
+	echo 		"Thank you $contact->FirstName.<br>";
 	echo 		"You have successfully been added to our database<br><br>";
 	echo 		"<b>Contact Information:</b><br>";
 	echo 		"ID Number: $contact->ID<br>";
