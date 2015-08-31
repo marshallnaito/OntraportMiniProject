@@ -2,14 +2,13 @@
 
 class Contact
 {
-	// db variables
+	// database variables
 	private static $tname;
 	private static $db;
 	private static $connection;
-
 	private static $instance;
 
-	// tb variables
+	// table variables
 	public static $ID=null;
 	public static $FirstName;
 	public static $LastName;
@@ -17,34 +16,33 @@ class Contact
 
 	// private function __construct() {
 	// 	$config = parse_ini_file('user.credentials.ini');
-	// 	$this->tblname=$config['tbname'];
+	// 	$this->tname=$config['tbname'];
 	// 	$this->connection = new mysqli($config['servername'], $config['username'], $config['password'], $config['dbname']);
 	// }
 
 	private function __destruct() {
-		//$this->connection->close();
 		mysqli_close($this->connection);
 	}
 
-	public function checkConnection() {
-		if ($this->connection==null){
+	// Establishes and Returns a MySqli connection if one is not already present.
+	public static function getConnection() {
+		if (self::$connection==null){
 			$config = parse_ini_file('user.credentials.ini');
-			$this->tname=$config['tbname'];
-			$this->connection = new mysqli($config['servername'], $config['username'], $config['password'], $config['dbname']);
+			self::$tname=$config['tbname'];
+			self::$connection = new mysqli($config['servername'], $config['username'], $config['password'], $config['dbname']);
 			if (mysqli_connect_errno()){
 				return false;
 			} else {
-				return true;
+				return self::$connection;
 			}
 		}
 	}
-
 
 	// setter
 	public function setValue($field,$newValue)
 	{
 		$this->$field=$newValue;
-	} 
+	}
 
 	// getter
 	public function getValue($field)
@@ -52,51 +50,59 @@ class Contact
 		return $this->$field;
 	}
 
-	// push Contact info into the db.
 	public function save()
 	{
-		$this->checkConnection();
-		//add user into the database
-		$query = "INSERT INTO $this->tname (firstname, lastname, email) VALUES ('$this->FirstName', '$this->LastName', '$this->Email')";
-		// check if added to the database
-		if (!mysqli_query($this->connection, $query)){
-			header('Location: input_user.html');
-			//header("Refresh: 3, url=input_user.html");
-			die ("ERROR: $query not added correctly.<br>" . mysqli_error($this->connection));
+		// connect to the database if not already connected
+		$conn = self::getConnection();
+		if (!$conn)
+		{
+			return false;
+		}
+		else {
+			//add user into the database
+			$query = "INSERT INTO " . self::$tname . " (firstname, lastname, email) VALUES ('$this->FirstName', '$this->LastName', '$this->Email')";
+			if (!mysqli_query($conn, $query)){
+				return false;
+			} else {
+				$this->setValue("ID", mysqli_insert_id($conn) );
+				return true;
+			}
+		}
+	}
+
+	// Checks to see if there is an instance of the class already. Creates one if absent.
+	public static function getInstance() {
+		if(!self::$instance) {
+			self::$instance = new static();
+		}
+		return self::$instance;
+	}
+
+	// Fetches the Contact's Values given an ID number
+	// Returns a Class instance if the information was retrieved correctly, otherwise false
+	public static function Fetch($cID){
+		// create a static instance of the class
+		$inst = self::getInstance();
+
+		// establish connection and make the query
+		$conn = self::getConnection();
+		$qry = "SELECT firstname, lastname, email FROM " . self::$tname . " WHERE id=" . $cID;
+		$result = mysqli_query($conn, $qry);
+
+		// check to see if it is a valid query
+		if (!$result){
+			return false;
 		} else {
-			$this->setValue("ID", mysqli_insert_id($this->connection) );
-		}
-
-		mysqli_close($this->connection);
+			$info = mysqli_fetch_assoc($result);
+			// // read in table entries into class
+			$inst->ID = $cID;
+		 	$inst->FirstName = $info['firstname'];
+		 	$inst->LastName = $info['lastname'];
+		 	$inst->Email = $info['email'];
+		 	return $inst;
+	 	}
 	}
 
-	
-	// retrieve contact info from the database
-	public function Fetch($cID){
-		$this->checkConnection();
-		// get the relevant contact information from the database
-		$qry = "SELECT firstname, lastname, email FROM $this->tname WHERE id=$cID";
-		$result = mysqli_query($this->connection, $qry) or die("Could not retrieve contact information");
-		$info = mysqli_fetch_assoc($result);
-
-		// read in table entries into class
-		$this->ID = $cID;
-	 	$this->FirstName = $info['firstname'];
-	 	$this->LastName = $info['lastname'];
-	 	$this->Email = $info['email'];
-
-	 	//close connections
-	 	mysqli_free_result($result);
-	 	mysqli_close($this->connection);
-
-	}
-
-	public static function Fetcher($cID){
-		if (self::$instance==null){
-			self::$instance = new self();
-		}
-		return self::instance;
-	}
 	// table info:
 			// create table user_info(
 		 //    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
