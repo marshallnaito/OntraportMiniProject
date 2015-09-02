@@ -79,7 +79,7 @@ class Contact
 	}
 
 	// Fetches the Contact's Values given an ID number
-	// Returns a Class instance if the information was retrieved correctly, otherwise false
+	// Returns a Class instance if the information was retrieved correctly, false otherwise
 	public static function Fetch($cID){
 		// create a static instance of the class
 		$inst = self::getInstance();

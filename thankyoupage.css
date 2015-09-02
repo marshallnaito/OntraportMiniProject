@@ -2,7 +2,7 @@
 <style type="text/css">
 
     .thank-you-style {
-        max-width:300px;
+        max-width:400px;
         margin:50px auto;
         border-radius:2px;
         padding:20px;
@@ -11,7 +11,7 @@
 
     .thank-you-style div {
     	margin:auto;
-        max-width:210px;
+        max-width:400px;
     	position:relative;
     	padding:10px;
     	border-style: solid;
@@ -22,25 +22,50 @@
         display: block;
         text-align: center;
         font-size: 24px;
-        color: #B9B9B9;
+        color: #2471FF;
         padding: 2px;
     }
 
     .thank-you-style h2 {
-        display: block;
         text-align: center;
-        font-size: 12px;
-        color: #B9B9B9;
-        padding: 2px;
-
+        font-size: 18px;
     }
 
+    .thank-you-style h3 {
+        display: block;
+        text-align: center;
+        font-size: 14px;
+        color: #B9B9B9;
+        padding: 2px;
+    }
+
+    .thank-you-style dl {
+        margin-bottom: 10px;
+    }
+
+
+    .thank-you-style dl dt {
+        background: #2471FF;
+        color: #fff;
+        float: left;
+        font-weight: bold;
+        margin-right: 10px;
+        padding: 5px;
+        width: 150px;
+    }
+
+    .thank-you-style dl dd {
+        background: #B9B9B9;
+        margin: 2px 0;
+        padding: 5px 0;
+    }
+
+
     #cbox {
-        width: 500px;
+        width: 600px;
         margin-left:auto;
         margin-right:auto;
         padding: 20px;
-
     }
 
 </style>

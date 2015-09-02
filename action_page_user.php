@@ -14,9 +14,6 @@
 	else {
 		// retrieve the contact ID and send it ot the thank you page
 		$cID = $contact->getValue("ID");
-		//header("Location: thankyoupage.php?contactID=$cID");
-		//header("Location: thankyoupage.html");
 		header("Location: thank_you_page.php?contactID=$cID");
 	}
-
 ?>
