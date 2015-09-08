@@ -1,19 +1,22 @@
 <?php
-	// retrieve and store variables from the session
-	session_start();
-	$fName = $_SESSION['fName'];
-	$lName = $_SESSION['lName'];
-	$emailAddress = $_SESSION['emailAddress'];
-	session_destroy();
+	// retrieve and store variables from contact
+	include 'Contact.php';
+
+	// Get ID and retrieve info from database
+	$contactID=$_GET['contactID'];
+	$contact = new Contact();
+	$contact->Fetch($contactID);
 
 	// echo thank you message
 	echo "<html>";
 	echo 	"<body>";
-	echo 		"Thank you $fName.<br>";
+	echo 		"Thank you $contact->FirstName.<br>";
 	echo 		"You have successfully been added to our database<br><br>";
 	echo 		"<b>Contact Information:</b><br>";
-	echo 		"Name: $fName $lName<br>";
-	echo 		"Email: $emailAddress<br>";
+	echo 		"ID Number: $contact->ID<br>";
+	echo 		"First Name: $contact->FirstName<br>";
+	echo 		"Last Name: $contact->LastName<br>";
+	echo 		"Email: $contact->Email<br>";
 	echo 	"</body>";
 	echo "</html>";
 ?>
