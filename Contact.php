@@ -14,12 +14,6 @@ class Contact
 	public static $LastName;
 	public static $Email;
 
-	// private function __construct() {
-	// 	$config = parse_ini_file('user.credentials.ini');
-	// 	$this->tname=$config['tbname'];
-	// 	$this->connection = new mysqli($config['servername'], $config['username'], $config['password'], $config['dbname']);
-	// }
-
 	private function __destruct() {
 		mysqli_close($this->connection);
 	}
@@ -83,17 +77,17 @@ class Contact
 	public static function Fetch($cID){
 		// create a static instance of the class
 		$inst = self::getInstance();
-
+		
 		// establish connection and make the query
 		$conn = self::getConnection();
 		$qry = "SELECT firstname, lastname, email FROM " . self::$tname . " WHERE id=" . $cID;
 		$result = mysqli_query($conn, $qry);
+		$info = mysqli_fetch_assoc($result);
 
 		// check to see if it is a valid query
-		if (!$result){
-			return false;
+		if (!$info){
+			return null;
 		} else {
-			$info = mysqli_fetch_assoc($result);
 			// // read in table entries into class
 			$inst->ID = $cID;
 		 	$inst->FirstName = $info['firstname'];
